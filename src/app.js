@@ -24,10 +24,21 @@ const initState = {
 
 
 //createStore 三个参数reducer initState enhancer
-let store = createStore(counter,initState)// store 包含 dispatch getState replaceReducer subscribe Symbol
+let store = createStore(counter)// store 包含 dispatch getState replaceReducer subscribe Symbol
 
 console.log(store.getState())
 
 
-//手动调用dispatch
-store.dispatch({type:'DECREMENT'})
+//手动调用dispatch 触发一个action 修改数据
+store.dispatch({type:'INCREMENT'})
+store.dispatch({type:'INCREMENT'})
+store.dispatch({type:'INCREMENT'})
+store.dispatch({type:'INCREMENT'})
+
+console.log(store.getState())
+
+const listener = () =>{
+  document.body.innerText = store.getState()
+}
+
+store.subscribe(listener)
