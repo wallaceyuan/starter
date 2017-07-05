@@ -54,12 +54,16 @@ const mapStateToProps = ( state ) => {
     }
 }
 
-const mapDispatchToProps = () => {
-
+const mapDispatchToProps = ( dispath ) => {
+    return {
+        onInCrement: () => dispath( {type:'INCREMENT'} ),
+        onDeCrement: () => dispath( {type:'DECREMENT'} )
+    }
 }
 
 const RootApp = connect(
-    mapStateToProps
+    mapStateToProps,
+    mapDispatchToProps
 )(Counter)
 
 let root = document.getElementById('app')
