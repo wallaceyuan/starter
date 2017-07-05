@@ -1,4 +1,7 @@
 import {createStore} from 'redux';
+import React,{ Component,PropTypes } from 'react'
+import ReactDOM,{ render } from 'react-dom'
+import { Provider, connect } from 'react-redux'
 //import * as Redux from 'redux';
 //console.log(Redux)
 
@@ -17,30 +20,52 @@ const counter = (count = 0,action) =>{
   }
 }
 
-const initState = {
-  name:'guo',
-  city:'beijing'
-}
-
 //createStore 三个参数reducer initState enhancer
 let store = createStore(counter)// store 包含 dispatch getState replaceReducer subscribe Symbol
 
-console.log(store.getState())
-
-//手动调用dispatch 触发一个action 修改数据
-store.dispatch({type:'INCREMENT'})
-store.dispatch({type:'INCREMENT'})
-store.dispatch({type:'INCREMENT'})
-store.dispatch({type:'INCREMENT'})
-
-console.log(store.getState())
-
-const listener = () =>{
-  document.body.innerText = store.getState()
+class Counter extends Component {
+  constructor() {
+      super()
+  }
+  render(){
+    console.log(this.props)
+    return (
+        <div>
+          <h1>计数器:{this.props.value}</h1>
+          <button
+              className="btn btn-primary"
+              onClick={this.props.onInCrement}>
+            点我增1
+          </button>
+          <button
+              className="btn btn-success"
+              onClick={this.props.onDeCrement}>
+            点我减1
+          </button>
+        </div>
+    )
+  }
 }
 
-store.subscribe(listener)
 
-document.addEventListener('click',function(){
-    store.dispatch({type:'INCREMENT'})
-})
+const mapStateToProps = ( state ) => {
+    return {
+        value:state
+    }
+}
+
+const mapDispatchToProps = () => {
+
+}
+
+const RootApp = connect(
+    mapStateToProps
+)(Counter)
+
+let root = document.getElementById('app')
+render(
+    <Provider store={store}>
+        <RootApp />
+    </Provider>,root
+)
+
